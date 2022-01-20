@@ -1,0 +1,219 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\CQ\Desktop\BA952P2.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}16 Mar 2017, 18:06:08
+
+{com}. use "C:\Users\CQ\Desktop\Compustat1996to2005.dta"
+
+. generate Book_debt=dlttq+dlcq
+{txt}(83,086 missing values generated)
+
+{com}. gen lag_lseq=lseq[n-1]
+{err}n ambiguous abbreviation
+{txt}{search r(111):r(111);}
+
+{com}. gen lag_lseq=lseq[_n-1]
+{txt}(60,485 missing values generated)
+
+{com}. gen Total_sale=saleq
+{txt}(44,646 missing values generated)
+
+{com}. gen Total_assets=lseq
+{txt}(60,485 missing values generated)
+
+{com}. gen Net_EI=(sstky-prstkcy)/lag_lseq
+{txt}(146,919 missing values generated)
+
+{com}. gen Net_DI=(Book_debt-Book_debt[_n-1])/lag_lseq
+{txt}(105,389 missing values generated)
+
+{com}. gen MV_E=prccq*cshoq
+{txt}(80,132 missing values generated)
+
+{com}. gen BV_E=lseq-(ltq+ibadjq*4+txditcq)
+{txt}(114,036 missing values generated)
+
+{com}. gen Tangible_assets=ppegtq
+{txt}(188,078 missing values generated)
+
+{com}. gen Net_worth=lseq-ltq
+{txt}(60,833 missing values generated)
+
+{com}. gen Cash=cheq
+{txt}(61,741 missing values generated)
+
+{com}. gen Net_WC=actq-lctq
+{txt}(127,667 missing values generated)
+
+{com}. gen EBITDA=oibdpq
+{txt}(96,175 missing values generated)
+
+{com}. gen Cash_F=ibq+dpq
+{txt}(100,720 missing values generated)
+
+{com}. gen Net_income=niq
+{txt}(44,005 missing values generated)
+
+{com}. gen Interest_exp=xintq
+{txt}(145,295 missing values generated)
+
+{com}. save "C:\Users\CQ\Desktop\Compustat1996to2005.dta", replace
+{txt}file C:\Users\CQ\Desktop\Compustat1996to2005.dta saved
+
+{com}. sort gvkey
+
+. quietly by gvkey:  gen dup = cond(_N==1,0,_n)
+
+. tabulate dup
+
+        {txt}dup {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        160        0.04        0.04
+{txt}          1 {c |}{res}     17,210        4.05        4.09
+{txt}          2 {c |}{res}     17,210        4.05        8.14
+{txt}          3 {c |}{res}     17,022        4.01       12.15
+{txt}          4 {c |}{res}     16,751        3.94       16.09
+{txt}          5 {c |}{res}     16,201        3.81       19.91
+{txt}          6 {c |}{res}     15,953        3.76       23.67
+{txt}          7 {c |}{res}     15,735        3.70       27.37
+{txt}          8 {c |}{res}     15,384        3.62       30.99
+{txt}          9 {c |}{res}     14,778        3.48       34.47
+{txt}         10 {c |}{res}     14,438        3.40       37.87
+{txt}         11 {c |}{res}     14,060        3.31       41.18
+{txt}         12 {c |}{res}     13,559        3.19       44.38
+{txt}         13 {c |}{res}     12,970        3.05       47.43
+{txt}         14 {c |}{res}     12,638        2.98       50.40
+{txt}         15 {c |}{res}     12,273        2.89       53.29
+{txt}         16 {c |}{res}     11,797        2.78       56.07
+{txt}         17 {c |}{res}     11,292        2.66       58.73
+{txt}         18 {c |}{res}     10,985        2.59       61.32
+{txt}         19 {c |}{res}     10,661        2.51       63.83
+{txt}         20 {c |}{res}     10,224        2.41       66.24
+{txt}         21 {c |}{res}      9,781        2.30       68.54
+{txt}         22 {c |}{res}      9,515        2.24       70.78
+{txt}         23 {c |}{res}      9,238        2.18       72.95
+{txt}         24 {c |}{res}      8,932        2.10       75.06
+{txt}         25 {c |}{res}      8,521        2.01       77.06
+{txt}         26 {c |}{res}      8,309        1.96       79.02
+{txt}         27 {c |}{res}      8,116        1.91       80.93
+{txt}         28 {c |}{res}      7,836        1.85       82.78
+{txt}         29 {c |}{res}      7,297        1.72       84.49
+{txt}         30 {c |}{res}      7,130        1.68       86.17
+{txt}         31 {c |}{res}      6,958        1.64       87.81
+{txt}         32 {c |}{res}      6,742        1.59       89.40
+{txt}         33 {c |}{res}      6,162        1.45       90.85
+{txt}         34 {c |}{res}      6,036        1.42       92.27
+{txt}         35 {c |}{res}      5,905        1.39       93.66
+{txt}         36 {c |}{res}      5,758        1.36       95.02
+{txt}         37 {c |}{res}      5,519        1.30       96.32
+{txt}         38 {c |}{res}      5,398        1.27       97.59
+{txt}         39 {c |}{res}      5,202        1.22       98.81
+{txt}         40 {c |}{res}      4,903        1.15       99.97
+{txt}         41 {c |}{res}        118        0.03       99.99
+{txt}         42 {c |}{res}         18        0.00      100.00
+{txt}         43 {c |}{res}          4        0.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}    424,699      100.00
+
+{com}. drop if dup<4
+{txt}(51,602 observations deleted)
+
+{com}. save "C:\Users\CQ\Desktop\Compustat1996to2005.dta", replace
+{txt}file C:\Users\CQ\Desktop\Compustat1996to2005.dta saved
+
+{com}. centile Book_debt, centile(5,95)
+
+{txt}{col 56}{hline 2} Binom. Interp. {hline 2}
+    Variable {c |}       Obs  Percentile    Centile        [95% Conf. Interval]
+{hline 13}{c +}{hline 61}
+   Book_debt {c |}{col 14}{res}   312,097{col 29}      5{col 39}        0{col 55}        0{col 67}        0{txt}
+             {c |}{res}{col 29}     95{col 39} 2993.049{col 55}  2919.58{col 67} 3063.628{txt}
+
+{com}. drop costat
+
+. drop fic cheq_dc
+
+. drop cshoq_dc dicq_dc dittq_dc dpq_dc ibadjq_dc ibq_dc lseq_dc ltq_dc niq_dc ppegtq_dc saleq_dc txditcq_dc xintq_dc dltisy_dc prstkcy_dc sstky_dc cshoq_fn dlcq_fn1
+{err}variable {bf}dicq_dc{sf} not found
+{txt}{search r(111):r(111);}
+
+{com}. drop cshoq_dc dlcq_dc dlttq_dc dpq_dc ibadjq_dc ibq_dc lseq_dc ltq_dc niq_dc pegtq_dc saleq_dc txditcq_dc xintq_dc dltisy_dc prstkcy_dc sstky_dc cshoq_fn 
+{err}variable {bf}pegtq_dc{sf} not found
+{txt}{search r(111):r(111);}
+
+{com}. drop cshoq_dc dlcq_dc dlttq_dc dpq_dc ibadjq_dc ibq_dc lseq_dc ltq_dc niq_dc ppegtq_dc saleq_dc txditcq_dc xintq_dc dltisy_dc prstkcy_dc sstky_dc cshoq_fn 
+
+. drop oibdpq_dc dltry_dc dlcq_fn1 dlttq_fn1 dpg_fn1 ibadjq_fn lseq_fn1 saleq_fn1 xintq_fn1
+{err}variable {bf}dpg_fn1{sf} not found
+{txt}{search r(111):r(111);}
+
+{com}. drop oibdpq_dc dltry_dc dlcq_fn1 dlttq_fn1 dpq_fn1 ibadjq_fn lseq_fn1 saleq_fn
+
+. 
+. xintq_fn1
+{err}command {bf}xintq_fn1{sf} is unrecognized
+{txt}{search r(199):r(199);}
+
+{com}. drop xintq_fn1 ibq_fn1
+
+. save "C:\Users\CQ\Desktop\Compustat1996to2005.dta", replace
+{txt}file C:\Users\CQ\Desktop\Compustat1996to2005.dta saved
+
+{com}. drop if mi(Book_debt)
+{txt}(61,000 observations deleted)
+
+{com}. drop if mi( Total_sale )
+{txt}(2,469 observations deleted)
+
+{com}. drop if mi( Total_assets )
+{txt}(6 observations deleted)
+
+{com}. drop if mi( Net_EI )
+{txt}(71,886 observations deleted)
+
+{com}. drop if mi( Net_DI )
+{txt}(4,479 observations deleted)
+
+{com}. drop if mi( MV_E )
+{txt}(20,600 observations deleted)
+
+{com}. drop if mi( BV_E )
+{txt}(16,109 observations deleted)
+
+{com}. drop if mi( Tangible_assets )
+{txt}(52,769 observations deleted)
+
+{com}. drop if mi( Net_worth )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( Cash )
+{txt}(30 observations deleted)
+
+{com}. drop if mi( Net_WC )
+{txt}(4,885 observations deleted)
+
+{com}. drop if mi( EBITDA )
+{txt}(12,640 observations deleted)
+
+{com}. drop if mi( Cash_F )
+{txt}(53 observations deleted)
+
+{com}. drop if mi( Net_income )
+{txt}(1 observation deleted)
+
+{com}. drop if mi( Interest_exp )
+{txt}(21,435 observations deleted)
+
+{com}. drop if mi( dup )
+{txt}(0 observations deleted)
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\CQ\Desktop\BA952P2.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}17 Mar 2017, 06:05:07
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

@@ -1,0 +1,689 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\CQ\Desktop\BA952P2b.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}17 Mar 2017, 06:09:46
+
+{com}. use "C:\Users\CQ\Desktop\Compustat1996to2005.dta"
+
+. winsor Book_debt, p9(0.05)
+{err}command {bf}winsor{sf} is unrecognized
+{txt}{search r(199):r(199);}
+
+{com}. winsor Book_debt, gen (Book_debtw) p9(0.05)
+{err}command {bf}winsor{sf} is unrecognized
+{txt}{search r(199):r(199);}
+
+{com}. winsor Book_debt,  p(0.05)
+{err}command {bf}winsor{sf} is unrecognized
+{txt}{search r(199):r(199);}
+
+{com}. winsor Book_debt, gen (Book_debtw) p(0.05)
+{err}command {bf}winsor{sf} is unrecognized
+{txt}{search r(199):r(199);}
+
+{com}. ssc install winsor
+{txt}checking {hilite:winsor} consistency and verifying not already installed...
+installing into c:\ado\plus\...
+installation complete.
+
+{com}. winsor Book_debt, p9(0.05)
+{err}option generate() required
+{txt}{search r(198):r(198);}
+
+{com}. winsor Book_debt, gen (Book_debtw) p(0.05)
+
+. winsor Book_debt, gen ( Total_salew) p(0.05)
+
+. winsor Book_debt, gen ( Total_assetsw) p(0.05)
+
+. winsor Book_debt, gen ( Net_EIw ) p(0.05)
+
+. winsor Book_debt, gen ( Net_DIw ) p(0.05)
+
+. winsor Book_debt, gen ( MV_Ew ) p(0.05)
+
+. winsor Book_debt, gen ( BV_Ew) p(0.05)
+
+. winsor Book_debt, gen ( Tangible_assetsw ) p(0.05)
+
+. winsor Book_debt, gen ( Net_worthw ) p(0.05)
+
+. winsor Book_debt, gen ( Cashw ) p(0.05)
+
+. winsor Book_debt, gen ( Net_WCw ) p(0.05)
+
+. winsor Book_debt, gen ( EBITDAw ) p(0.05)
+
+. winsor Book_debt, gen ( Cash_Fw ) p(0.05)
+
+. winsor Book_debt, gen ( Net_incomew ) p(0.05)
+
+. winsor Book_debt, gen ( Interest_expw ) p(0.05)
+
+. save "C:\Users\CQ\Desktop\Compustat1996to2005.dta", replace
+{txt}file C:\Users\CQ\Desktop\Compustat1996to2005.dta saved
+
+{com}. drop if mi( Book_debtw )
+{txt}(61,000 observations deleted)
+
+{com}. drop if mi( Total_salew )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( Total_assetsw )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( Net_EIw )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( Net_DIw )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( MV_Ew )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( BV_Ew )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( Tangible_assetsw )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( Net_worthw )
+{txt}(0 observations deleted)
+
+{com}. drop if mi(n Cashw )
+{err}nCashw not found
+{txt}{search r(111):r(111);}
+
+{com}. drop if mi( Cashw )
+{txt}(0 observations deleted)
+
+{com}. drop if Book_debtw==0
+{txt}(47,601 observations deleted)
+
+{com}.  drop if Total_salew ==0
+{txt}(0 observations deleted)
+
+{com}. 
+.  drop if mi( Book_debt )
+{txt}(0 observations deleted)
+
+{com}. drop if mi( Total_sale )
+{txt}(1,797 observations deleted)
+
+{com}. drop if mi( Total_assets )
+{txt}(6 observations deleted)
+
+{com}. drop if mi( Net_EI )
+{txt}(62,331 observations deleted)
+
+{com}. drop if mi( Net_DI )
+{txt}(4,228 observations deleted)
+
+{com}. drop if mi( MV_E )
+{txt}(18,948 observations deleted)
+
+{com}. drop if mi( BV_E )
+{txt}(15,264 observations deleted)
+
+{com}. drop if mi( Tangible_assets )
+{txt}(42,213 observations deleted)
+
+{com}. use "C:\Users\CQ\Desktop\CSTATSEC_NSS_20091005.dta", clear
+
+. use "C:\Users\CQ\Desktop\Compustat1996to2005.dta"
+
+. merge 1:1 gvkey datacqtr using "C:\Users\CQ\Desktop\CSTATSEC_NSS_20091005.dta"
+{res}{err}{p 0 4 2}
+variable{err}s{err} gvkey
+datacqtr
+do not uniquely identify observations in the
+master data
+{p_end}
+{txt}{search r(459):r(459);}
+
+{com}. merge 1:1 gvkey datacqtr using "C:\Users\CQ\Desktop\CSTATSEC_NSS_20091005.dta"
+{res}{err}{p 0 4 2}
+variable{err}s{err} gvkey
+datacqtr
+do not uniquely identify observations in the
+master data
+{p_end}
+{txt}{search r(459):r(459);}
+
+{com}. merge 1:1 gvkey datacqtr using "C:\Users\CQ\Desktop\Compustat1996to2005.dta"
+{res}{err}{p 0 4 2}
+variable{err}s{err} gvkey
+datacqtr
+do not uniquely identify observations in the
+master data
+{p_end}
+{txt}{search r(459):r(459);}
+
+{com}. drop if mi( Book_debtw )
+{txt}(61,000 observations deleted)
+
+{com}.  drop if mi( Tangible_assetsw )
+{txt}(0 observations deleted)
+
+{com}.  drop if mi( Tangible_assets )
+{txt}(105,279 observations deleted)
+
+{com}.  drop if mi( Net_DI )
+{txt}(15,115 observations deleted)
+
+{com}.  drop if mi( Net_EI )
+{txt}(25,286 observations deleted)
+
+{com}.  drop if mi( Total_assets )
+{txt}(0 observations deleted)
+
+{com}.  drop if mi( Total_sale )
+{txt}(768 observations deleted)
+
+{com}.  drop if mi( BV_E )
+{txt}(7,963 observations deleted)
+
+{com}.  drop if mi( MV_E )
+{txt}(13,907 observations deleted)
+
+{com}.  drop if mi( Net_income )
+{txt}(5 observations deleted)
+
+{com}.  drop if mi( Net_WC )
+{txt}(4,888 observations deleted)
+
+{com}. gen Book_debt_Asset= Book_debt/ Total_assets
+{txt}(242 missing values generated)
+
+{com}. gen Net_worth_Asset= Net_worth / Total_assets
+{txt}(242 missing values generated)
+
+{com}. gen Net_WC_Asset= Net_WC / Total_assets
+{txt}(242 missing values generated)
+
+{com}. gen Cash_Asset= Cash / Total_assets
+{txt}(269 missing values generated)
+
+{com}. gen EBITDA _Asset= EBITDA / Total_assets[_n-1]
+{err}variable {bf}EBITDA{sf} already defined
+{txt}{search r(110):r(110);}
+
+{com}. gen EBITDA_Asset= EBITDA / Total_assets[_n-1]
+{txt}(12,856 missing values generated)
+
+{com}. gen Cash_F_Asset= Cash_F / Total_assets[_n-1]
+{txt}(12,737 missing values generated)
+
+{com}. gen Net_income_Asset= Net_income / Total_assets[_n-1]
+{txt}(243 missing values generated)
+
+{com}. gen Interest_exp_Asset= Interest_exp / Total_assets[_n-1]
+{txt}(25,203 missing values generated)
+
+{com}. gen Tangible_assets_Asset= Tangible_assets / Total_assets
+{txt}(242 missing values generated)
+
+{com}. gen MB_ratio= MV_E/ BV_E
+{txt}(13 missing values generated)
+
+{com}. summary
+{err}command {bf}summary{sf} is unrecognized
+{txt}{search r(199):r(199);}
+
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}gvkey {c |}{res}          0
+{txt}{space 4}datadate {c |}{res}    138,886    14948.33    964.0987      13422      16801
+{txt}{space 6}fyearq {c |}{res}    138,886    2000.293    2.624124       1996       2006
+{txt}{space 8}fqtr {c |}{res}    138,886     2.71527    1.164664          1          4
+{txt}{space 9}fyr {c |}{res}    138,886    9.702015    3.474561          1         12
+{txt}{hline 13}{c +}{hline 57}
+{space 6}indfmt {c |}{res}          0
+{txt}{space 6}consol {c |}{res}          0
+{txt}{space 6}popsrc {c |}{res}          0
+{txt}{space 5}datafmt {c |}{res}          0
+{txt}{space 6}curcdq {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 4}datacqtr {c |}{res}          0
+{txt}{space 4}datafqtr {c |}{res}          0
+{txt}{space 8}actq {c |}{res}    138,886    387.5131    1755.527      -.179      97892
+{txt}{space 8}cheq {c |}{res}    138,859    100.9479     605.945     -4.018      60592
+{txt}{space 7}cshoq {c |}{res}    138,886    62.30893    332.6037          0   34099.12
+{txt}{hline 13}{c +}{hline 57}
+{space 8}dlcq {c |}{res}    138,886    65.71459    493.8451      -1068   36700.73
+{txt}{space 7}dlttq {c |}{res}    138,886    313.9834    1483.965          0   49909.29
+{txt}{space 9}dpq {c |}{res}    126,366    17.85555    107.1733      -.461       5301
+{txt}{space 6}ibadjq {c |}{res}    138,886    10.80306    214.6065     -44905      22245
+{txt}{space 9}ibq {c |}{res}    138,886    11.00594    214.7103     -44905      22245
+{txt}{hline 13}{c +}{hline 57}
+{space 8}lctq {c |}{res}    138,886    294.7628    1522.549      -.004      84964
+{txt}{space 8}lseq {c |}{res}    138,886    1308.029    6354.146          0     243564
+{txt}{space 9}ltq {c |}{res}    138,886    806.2519    3942.398      -.004     137677
+{txt}{space 9}niq {c |}{res}    138,886    10.69907    241.4562     -44905      26615
+{txt}{space 6}oibdpq {c |}{res}    126,245    47.70945    283.4401  -2848.112      17626
+{txt}{hline 13}{c +}{hline 57}
+{space 6}ppegtq {c |}{res}    138,886    920.5349    5484.456          0     331106
+{txt}{space 7}saleq {c |}{res}    138,886    277.9441     1374.32        -63      88298
+{txt}{space 5}txditcq {c |}{res}    138,886    75.47515     646.514        -14      41655
+{txt}{space 7}xintq {c |}{res}    113,894    7.655967    36.88246   -120.095   3325.842
+{txt}{space 6}dltisy {c |}{res}    133,356    77.35329    511.4168     -1.905   51015.95
+{txt}{hline 13}{c +}{hline 57}
+{space 7}dltry {c |}{res}    135,224    63.12012    455.1299     -5.777    48705.6
+{txt}{space 5}prstkcy {c |}{res}    138,886    17.49841    176.0091      -.285      18221
+{txt}{space 7}sstky {c |}{res}    138,886    14.53726    113.3518    -14.663      10413
+{txt}{space 7}prccq {c |}{res}    138,886     13.7672    24.92362      .0001    2522.39
+{txt}{space 3}Book_debt {c |}{res}    138,886     379.698    1848.351          0      79594
+{txt}{hline 13}{c +}{hline 57}
+{space 4}lag_lseq {c |}{res}    138,886    1279.661    6241.048      -.001     252352
+{txt}{space 2}Total_sale {c |}{res}    138,886    277.9441     1374.32        -63      88298
+{txt}Total_assets {c |}{res}    138,886    1308.029    6354.146          0     243564
+{txt}{space 6}Net_EI {c |}{res}    138,886    .5368638    70.08473  -551.2093      18800
+{txt}{space 6}Net_DI {c |}{res}    138,886    .1980186    33.51799   -3125.25       9500
+{txt}{hline 13}{c +}{hline 57}
+{space 8}MV_E {c |}{res}    138,886    1589.348    9669.488          0   485366.2
+{txt}{space 8}BV_E {c |}{res}    138,886    383.0896    2155.212     -80571     226662
+{txt}Tangible_a~s {c |}{res}    138,886    920.5349    5484.456          0     331106
+{txt}{space 3}Net_worth {c |}{res}    138,886     501.777    2704.423     -25560     155618
+{txt}{space 8}Cash {c |}{res}    138,859    100.9479     605.945     -4.018      60592
+{txt}{hline 13}{c +}{hline 57}
+{space 6}Net_WC {c |}{res}    138,886    92.75031    695.5306     -33780      55597
+{txt}{space 6}EBITDA {c |}{res}    126,245    47.70945    283.4401  -2848.112      17626
+{txt}{space 6}Cash_F {c |}{res}    126,366    29.30662    271.7043     -44052      22841
+{txt}{space 2}Net_income {c |}{res}    138,886    10.69907    241.4562     -44905      26615
+{txt}Interest_exp {c |}{res}    113,894    7.655967    36.88246   -120.095   3325.842
+{txt}{hline 13}{c +}{hline 57}
+{space 9}dup {c |}{res}    138,886    18.01141    9.978246          4         43
+{txt}{space 2}Book_debtw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 1}Total_salew {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}Total_asse~w {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 5}Net_EIw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{hline 13}{c +}{hline 57}
+{space 5}Net_DIw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 7}MV_Ew {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 7}BV_Ew {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}Tangible_a~w {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 2}Net_worthw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{hline 13}{c +}{hline 57}
+{space 7}Cashw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 5}Net_WCw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 5}EBITDAw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 5}Cash_Fw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 1}Net_incomew {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{hline 13}{c +}{hline 57}
+Interest_e~w {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}Book_debt_~t {c |}{res}    138,644    1.091835    27.79794          0       3921
+{txt}Net_worth_~t {c |}{res}    138,644   -2.137693    71.95973      -8555   1.001815
+{txt}Net_WC_Asset {c |}{res}    138,644   -2.051629    68.07564  -8555.999          1
+{txt}{space 2}Cash_Asset {c |}{res}    138,617    .1912123     .241818   -.531746          1
+{txt}{hline 13}{c +}{hline 57}
+EBITDA_Asset {c |}{res}    126,030     1.10541    273.9797  -4729.833      91900
+{txt}Cash_F_Asset {c |}{res}    126,149    .2440027    173.6141      -7080      57200
+{txt}Net_income~t {c |}{res}    138,643   -.3337382    148.6848     -11122   50566.66
+{txt}Interest_e~t {c |}{res}    113,683    .2258772    13.67139  -.0039499       3300
+{txt}Tangible_a~t {c |}{res}    138,644    .6187712    4.836999          0   1083.333
+{txt}{hline 13}{c +}{hline 57}
+{space 4}MB_ratio {c |}{res}    138,873   -5.62e+14    2.16e+17  -8.05e+19   3.88e+18
+
+{com}. mean( Book_debt_Asset )
+{res}
+{txt}Mean estimation{col 35}Number of obs{col 51}= {res}   138,644
+
+{txt}{hline 16}{c TT}{hline 11}{hline 11}{hline 14}{hline 12}
+{col 17}{c |}       Mean{col 29}   Std. Err.{col 41}     [95% Con{col 54}f. Interval]
+{hline 16}{c +}{hline 11}{hline 11}{hline 14}{hline 12}
+Book_debt_Asset {c |}{col 17}{res}{space 2} 1.091835{col 29}{space 2} .0746555{col 40}{space 5} .9455118{col 54}{space 3} 1.238159
+{txt}{hline 16}{c BT}{hline 11}{hline 11}{hline 14}{hline 12}
+
+{com}. median( Book_debt_Asset )
+{err}option by() required
+{txt}{search r(198):r(198);}
+
+{com}. gen ln_assets=log( Total_assets )
+{txt}(242 missing values generated)
+
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}gvkey {c |}{res}          0
+{txt}{space 4}datadate {c |}{res}    138,886    14948.33    964.0987      13422      16801
+{txt}{space 6}fyearq {c |}{res}    138,886    2000.293    2.624124       1996       2006
+{txt}{space 8}fqtr {c |}{res}    138,886     2.71527    1.164664          1          4
+{txt}{space 9}fyr {c |}{res}    138,886    9.702015    3.474561          1         12
+{txt}{hline 13}{c +}{hline 57}
+{space 6}indfmt {c |}{res}          0
+{txt}{space 6}consol {c |}{res}          0
+{txt}{space 6}popsrc {c |}{res}          0
+{txt}{space 5}datafmt {c |}{res}          0
+{txt}{space 6}curcdq {c |}{res}          0
+{txt}{hline 13}{c +}{hline 57}
+{space 4}datacqtr {c |}{res}          0
+{txt}{space 4}datafqtr {c |}{res}          0
+{txt}{space 8}actq {c |}{res}    138,886    387.5131    1755.527      -.179      97892
+{txt}{space 8}cheq {c |}{res}    138,859    100.9479     605.945     -4.018      60592
+{txt}{space 7}cshoq {c |}{res}    138,886    62.30893    332.6037          0   34099.12
+{txt}{hline 13}{c +}{hline 57}
+{space 8}dlcq {c |}{res}    138,886    65.71459    493.8451      -1068   36700.73
+{txt}{space 7}dlttq {c |}{res}    138,886    313.9834    1483.965          0   49909.29
+{txt}{space 9}dpq {c |}{res}    126,366    17.85555    107.1733      -.461       5301
+{txt}{space 6}ibadjq {c |}{res}    138,886    10.80306    214.6065     -44905      22245
+{txt}{space 9}ibq {c |}{res}    138,886    11.00594    214.7103     -44905      22245
+{txt}{hline 13}{c +}{hline 57}
+{space 8}lctq {c |}{res}    138,886    294.7628    1522.549      -.004      84964
+{txt}{space 8}lseq {c |}{res}    138,886    1308.029    6354.146          0     243564
+{txt}{space 9}ltq {c |}{res}    138,886    806.2519    3942.398      -.004     137677
+{txt}{space 9}niq {c |}{res}    138,886    10.69907    241.4562     -44905      26615
+{txt}{space 6}oibdpq {c |}{res}    126,245    47.70945    283.4401  -2848.112      17626
+{txt}{hline 13}{c +}{hline 57}
+{space 6}ppegtq {c |}{res}    138,886    920.5349    5484.456          0     331106
+{txt}{space 7}saleq {c |}{res}    138,886    277.9441     1374.32        -63      88298
+{txt}{space 5}txditcq {c |}{res}    138,886    75.47515     646.514        -14      41655
+{txt}{space 7}xintq {c |}{res}    113,894    7.655967    36.88246   -120.095   3325.842
+{txt}{space 6}dltisy {c |}{res}    133,356    77.35329    511.4168     -1.905   51015.95
+{txt}{hline 13}{c +}{hline 57}
+{space 7}dltry {c |}{res}    135,224    63.12012    455.1299     -5.777    48705.6
+{txt}{space 5}prstkcy {c |}{res}    138,886    17.49841    176.0091      -.285      18221
+{txt}{space 7}sstky {c |}{res}    138,886    14.53726    113.3518    -14.663      10413
+{txt}{space 7}prccq {c |}{res}    138,886     13.7672    24.92362      .0001    2522.39
+{txt}{space 3}Book_debt {c |}{res}    138,886     379.698    1848.351          0      79594
+{txt}{hline 13}{c +}{hline 57}
+{space 4}lag_lseq {c |}{res}    138,886    1279.661    6241.048      -.001     252352
+{txt}{space 2}Total_sale {c |}{res}    138,886    277.9441     1374.32        -63      88298
+{txt}Total_assets {c |}{res}    138,886    1308.029    6354.146          0     243564
+{txt}{space 6}Net_EI {c |}{res}    138,886    .5368638    70.08473  -551.2093      18800
+{txt}{space 6}Net_DI {c |}{res}    138,886    .1980186    33.51799   -3125.25       9500
+{txt}{hline 13}{c +}{hline 57}
+{space 8}MV_E {c |}{res}    138,886    1589.348    9669.488          0   485366.2
+{txt}{space 8}BV_E {c |}{res}    138,886    383.0896    2155.212     -80571     226662
+{txt}Tangible_a~s {c |}{res}    138,886    920.5349    5484.456          0     331106
+{txt}{space 3}Net_worth {c |}{res}    138,886     501.777    2704.423     -25560     155618
+{txt}{space 8}Cash {c |}{res}    138,859    100.9479     605.945     -4.018      60592
+{txt}{hline 13}{c +}{hline 57}
+{space 6}Net_WC {c |}{res}    138,886    92.75031    695.5306     -33780      55597
+{txt}{space 6}EBITDA {c |}{res}    126,245    47.70945    283.4401  -2848.112      17626
+{txt}{space 6}Cash_F {c |}{res}    126,366    29.30662    271.7043     -44052      22841
+{txt}{space 2}Net_income {c |}{res}    138,886    10.69907    241.4562     -44905      26615
+{txt}Interest_exp {c |}{res}    113,894    7.655967    36.88246   -120.095   3325.842
+{txt}{hline 13}{c +}{hline 57}
+{space 9}dup {c |}{res}    138,886    18.01141    9.978246          4         43
+{txt}{space 2}Book_debtw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 1}Total_salew {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}Total_asse~w {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 5}Net_EIw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{hline 13}{c +}{hline 57}
+{space 5}Net_DIw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 7}MV_Ew {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 7}BV_Ew {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}Tangible_a~w {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 2}Net_worthw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{hline 13}{c +}{hline 57}
+{space 7}Cashw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 5}Net_WCw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 5}EBITDAw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 5}Cash_Fw {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{space 1}Net_incomew {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}{hline 13}{c +}{hline 57}
+Interest_e~w {c |}{res}    138,886    225.9021    605.4848          0       2993
+{txt}Book_debt_~t {c |}{res}    138,644    1.091835    27.79794          0       3921
+{txt}Net_worth_~t {c |}{res}    138,644   -2.137693    71.95973      -8555   1.001815
+{txt}Net_WC_Asset {c |}{res}    138,644   -2.051629    68.07564  -8555.999          1
+{txt}{space 2}Cash_Asset {c |}{res}    138,617    .1912123     .241818   -.531746          1
+{txt}{hline 13}{c +}{hline 57}
+EBITDA_Asset {c |}{res}    126,030     1.10541    273.9797  -4729.833      91900
+{txt}Cash_F_Asset {c |}{res}    126,149    .2440027    173.6141      -7080      57200
+{txt}Net_income~t {c |}{res}    138,643   -.3337382    148.6848     -11122   50566.66
+{txt}Interest_e~t {c |}{res}    113,683    .2258772    13.67139  -.0039499       3300
+{txt}Tangible_a~t {c |}{res}    138,644    .6187712    4.836999          0   1083.333
+{txt}{hline 13}{c +}{hline 57}
+{space 4}MB_ratio {c |}{res}    138,873   -5.62e+14    2.16e+17  -8.05e+19   3.88e+18
+{txt}{space 3}ln_assets {c |}{res}    138,644    4.304768    2.645922  -6.907755   12.40314
+
+{com}. distinct gvkey
+{err}command {bf}distinct{sf} is unrecognized
+{txt}{search r(199):r(199);}
+
+{com}. egen x=group(gvkey)
+
+. sum x
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 11}x {c |}{res}    138,886     4343.87    2823.098          1      10532
+
+{com}. view "C:\Users\CQ\Desktop\BA952P2.smcl"
+
+. doedit "C:\Users\CQ\Desktop\assignment2-2-main.do"
+
+. use "C:\Users\CQ\Desktop\SUFI_RFS_LINESOFCREDIT20070221DATA.dta", clear
+{txt}(LOC DATA FROM SUFI, RFS, BANK LINES OF CREDIT IN CORPORATE FINANCE)
+
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}gvkey {c |}{res}     28,447       30488    32506.99       1004     141469
+{txt}{space 7}yeara {c |}{res}     28,447    1999.577    2.222229       1996       2003
+{txt}randomsample {c |}{res}     28,447    .0670721    .2501512          0          1
+{txt}{space 6}lineun {c |}{res}      1,908     144.037    536.7798          0      10400
+{txt}{space 8}line {c |}{res}      1,908    51.34572    261.3921          0       4755
+{txt}{hline 13}{c +}{hline 57}
+{space 5}linetot {c |}{res}      1,908    195.3827     679.501          0      14671
+{txt}lineofcred~s {c |}{res}      1,908    .7484277    .4340304          0          1
+{txt}lineofcredit {c |}{res}     28,447    .8169227    .3867367          0          1
+{txt}{space 9}def {c |}{res}      1,908    .0796646    .2708442          0          1
+
+{com}. describe
+
+{txt}Contains data from {res}C:\Users\CQ\Desktop\SUFI_RFS_LINESOFCREDIT20070221DATA.dta
+{txt}  obs:{res}        28,447                          LOC DATA FROM SUFI, RFS, BANK
+                                                LINES OF CREDIT IN CORPORATE
+                                                FINANCE
+{txt} vars:{res}             9                          27 Feb 2007 16:51
+{txt} size:{res}       938,751                          
+{txt}{hline}
+              storage   display    value
+variable name   type    format     label      variable label
+{hline}
+{p 0 48}{res}{bind:gvkey          }{txt}{bind: long    }{bind:{txt}%12.0g    }{space 1}{bind:         }{bind:  }{res}{res}Compustat firm identifier{p_end}
+{p 0 48}{bind:yeara          }{txt}{bind: float   }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}Fiscal year{p_end}
+{p 0 48}{bind:randomsample   }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Random sample{p_end}
+{p 0 48}{bind:lineun         }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Unused line{p_end}
+{p 0 48}{bind:line           }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Used line{p_end}
+{p 0 48}{bind:linetot        }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Total line{p_end}
+{p 0 48}{bind:lineofcredit_rs}{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Has line of credit, random sample{p_end}
+{p 0 48}{bind:lineofcredit   }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}Has line of credit, full sample{p_end}
+{p 0 48}{bind:def            }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Financial covenant violation{p_end}
+{txt}{hline}
+Sorted by: {res}gvkey  yeara
+
+{com}. mat a = J(1,5,23)
+
+. a
+{err}command {bf}a{sf} is unrecognized
+{txt}{search r(199):r(199);}
+
+{com}. clear
+
+. generate Average_Cash_Assets = .
+
+. generate Frac_with_credit_line = .
+
+. set obs 1
+{txt}{p}
+number of observations (_N)  was 0,
+now 1
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.19 in 1
+{txt}(1 real change made)
+
+{com}. set obs 2
+{txt}{p}
+number of observations (_N)  was 1,
+now 2
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.38 in 2
+{txt}(1 real change made)
+
+{com}. set obs 3
+{txt}{p}
+number of observations (_N)  was 2,
+now 3
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.51 in 3
+{txt}(1 real change made)
+
+{com}. set obs 4
+{txt}{p}
+number of observations (_N)  was 3,
+now 4
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.52 in 4
+{txt}(1 real change made)
+
+{com}. set obs 5
+{txt}{p}
+number of observations (_N)  was 4,
+now 5
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.53 in 5
+{txt}(1 real change made)
+
+{com}. set obs 6
+{txt}{p}
+number of observations (_N)  was 5,
+now 6
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.55 in 6
+{txt}(1 real change made)
+
+{com}. set obs 7
+{txt}{p}
+number of observations (_N)  was 6,
+now 7
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.55 in 7
+{txt}(1 real change made)
+
+{com}. set obs 8
+{txt}{p}
+number of observations (_N)  was 7,
+now 8
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.58 in 8
+{txt}(1 real change made)
+
+{com}. set obs 9
+{txt}{p}
+number of observations (_N)  was 8,
+now 9
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.55 in 9
+{txt}(1 real change made)
+
+{com}. set obs 10
+{txt}{p}
+number of observations (_N)  was 9,
+now 10
+{p_end}
+
+{com}. replace Average_Cash_Assets = 0.44 in 10
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.59 in 1
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.29 in 2
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.18 in 3
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.13 in 4
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.09 in 5
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.08 in 6
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.08 in 7
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.11 in 8
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.19 in 9
+{txt}(1 real change made)
+
+{com}. replace Frac_with_credit_line = 0.34 in 10
+{txt}(1 real change made)
+
+{com}. webuse auto
+{err}no; data in memory would be lost
+{txt}{search r(4):r(4);}
+
+{com}. scatter Average_Cash_Assets Frac_with_credit_line
+{res}
+{com}. generate Deciles = .
+{txt}(10 missing values generated)
+
+{com}. replace Deciles = 1 in 1
+{txt}(1 real change made)
+
+{com}. replace Deciles = 2 in 2
+{txt}(1 real change made)
+
+{com}. replace Deciles = 3 in 3
+{txt}(1 real change made)
+
+{com}. replace Deciles = 4 in 4
+{txt}(1 real change made)
+
+{com}. replace Deciles = 5 in 5
+{txt}(1 real change made)
+
+{com}. replace Deciles = 6 in 6
+{txt}(1 real change made)
+
+{com}. replace Deciles = 7 in 7
+{txt}(1 real change made)
+
+{com}. replace Deciles = 8 in 8
+{txt}(1 real change made)
+
+{com}. replace Deciles = 9 in 9
+{txt}(1 real change made)
+
+{com}. webuse uslifeexp
+{err}no; data in memory would be lost
+{txt}{search r(4):r(4);}
+
+{com}. twoway connected Average_Cash_Assets Frac_with_credit_line Deciles
+{res}
+{com}. replace Deciles = 10 in 10
+{txt}(1 real change made)
+
+{com}. twoway connected Average_Cash_Assets Frac_with_credit_line Deciles
+{res}
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\CQ\Desktop\BA952P2b.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}17 Mar 2017, 12:01:22
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
