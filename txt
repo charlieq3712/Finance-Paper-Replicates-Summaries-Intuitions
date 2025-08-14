@@ -1,20 +1,175 @@
-Hi [Attorney’s Name],
+Great milestone! Here’s a rigorous, no‑drama checklist to walk into that meeting crystal‑clear on the two purposes Andrew listed.
 
-Thank you for your detailed assessment and recommendations. I agree with your impression that the review standard applied here feels closer to the EB-1A/B level, particularly in how they handled the “well-positioned” prong. I appreciate the clear outline of the supplemental evidence and strategy options.
+1) Are we all aligned with the upcoming reviews?
 
-I’d like to schedule a meeting with you to discuss the approach in more depth. I’m available this Friday (my last working day before paternity leave) at the following times (ET):
+a) Scope & definitions
 
-11:00 am – 12:00 pm
+Unit of analysis: Confirm the canonical grain (Country × Industry × Time). Are industries NAICS, ISIC, or a concordance? How are multi‑industry firms handled (primary vs. proportional assignment)?
 
-1:00 pm – 2:30 pm
+“Market” definition: National market or sub‑national when available? Are multi‑national parents counted via local subsidiaries only?
 
-3:30 pm – 5:00 pm
+Score recipe freeze: Exact formula for MCRS (e.g., weighting of C4, HHI, IBI, trend terms), normalization, winsorization, missing‑data rules.
 
-I’ll be starting paternity leave next Monday, with my first baby’s due date on August 30. I expect to have some time to focus on the NIW response before the birth.
+b) Data lineage & reproducibility
 
-Should we include Nalanda in this meeting so she’s aware of the type of documentation and evidence preparation she can support? Or would you prefer that we first meet to clarify the strategy, and then bring her in afterward?
+Snapshot date(s), upstream tables, and ETL job IDs used to produce analytics2_workarea.ab_market_concentration_risk.
 
-I will also work on some preparation notes and strategy ideas from my side and send them over before our meeting.
+Versioned code + environment; seed & parameters stored; idempotent reruns; audit log of changes.
 
-Best regards,
-Chester
+Promote path (workarea → staging → prod schema), schema contract, and deprecation/rollback plan.
+
+c) Validation & acceptance criteria
+
+Internal consistency: ρ(HHI, C4) ≥ 0.80 across cells; monotonic relation with IBI where expected.
+
+Stability: ≥90% of (Country×Industry) cells change < 0.1 quantiles MoM/YoY after normalization.
+
+Outcome linkage (where we have it): directional correlation of MCRS with delinquency, OOB, margin compression.
+
+Spot checks on 10 high‑exposure markets (by revenue or headcount) pass sanity review.
+
+d) Product readiness (Kevin’s review)
+
+Delivery artifact: API/table contract (field list, types, null policy, enums, confidence flags).
+
+Interpretability: reason codes (e.g., “High C4”, “Rising HHI”, “Low IBI”) + tooltips and a one‑page explainer.
+
+Default views & filters (region, industry, confidence tier); pagination/performance targets.
+
+Naming & UX language for low‑reliability cells (“Insufficient data” vs. “Low confidence”).
+
+e) Implementation readiness (Monday)
+
+Job orchestration (partitioning by Country×Industry), SLAs, cost profile, and auto‑retry/alerts.
+
+Data quality checks: coverage %, duplicate DUNS, parent/child collapse, currency consistency if revenue used.
+
+Monitoring: drift checks on N, coverage, mean/var of shares, and a canary market set.
+
+Access control & licensing: who can see which countries/industries.
+
+f) Legal/compliance alignment (Monday)
+
+Small‑cell disclosure risk: suppression/aggregation policy (see §2 below).
+
+Competition‑law safe harbor: language that this is analytics, not legal advice, and markets are proxy constructs.
+
+GDPR/PII: no personal data, clear aggregation; data residency implications.
+
+Sanctions/export: exclude/flag restricted jurisdictions; document rationale.
+
+Customer‑facing disclaimer + internal use policy approved.
+
+g) Go/No‑Go gates (propose)
+
+Coverage per Country×Industry ≥ 70% of known active firms or explicit low‑coverage flag.
+
+N‑threshold policy implemented (see below).
+
+All three reviews sign off on: formula, schema, flags, disclaimers, and runbook.
+
+2) Hesitations about scaling to global + last checks before implementation
+
+A) Small‑N / micro‑market policy (the “<10 businesses” issue)
+
+Publish rules (propose):
+
+N < 10: Suppress the cell; roll up to regional aggregate (e.g., Sub‑region, Income group) or mark “Insufficient data.”
+
+10 ≤ N < 30: Publish with Low Confidence flag; optionally apply shrinkage toward regional industry prior.
+
+N ≥ 30: Publish normally.
+
+Why: HHI mechanically inflates with small N, and miscoverage can masquerade as “concentration.”
+
+Implementation: add n_firms, coverage_rate, confidence_tier ∈ {Insufficient, Low, Standard}, and suppress_flag.
+
+B) Coverage variability across countries
+
+Compute coverage_rate = (in‑table firms)/(best estimate of active firms) per Country×Industry.
+
+If using revenue shares anywhere, document FX vs PPP conversion and reference period; otherwise prefer entity‑count shares for global comparability.
+
+Consider a coverage‑adjusted HHI (reported as an adjacent field), or at least bin coverage and color the UI.
+
+C) Taxonomy harmonization
+
+Lock a single global taxonomy (ISIC Rev.4 or NAICS→ISIC map) and publish the concordance table.
+
+One‑to‑many mappings: choose primary mapping with a tie‑break rule (revenue, headcount, or DUNS primary SIC).
+
+D) Multinationals & hierarchy
+
+De‑dup parent/child within the same country; do not let a single group’s subsidiaries inflate C4 via counting quirks.
+
+Decide whether to allocate global revenue locally or rely on local legal entities only (recommend the latter for competition‑style metrics).
+
+Treat branches vs subsidiaries consistently.
+
+E) Temporal alignment
+
+Ensure all inputs align to the same as‑of date; avoid mixing vintages across countries.
+
+Publish a as_of_date field and a refresh cadence (e.g., monthly). Put guards against partial refreshes.
+
+F) Robustness & sensitivity
+
+Sensitivity panel: re‑compute MCRS under (i) excluding top global conglomerates, (ii) different N‑thresholds, (iii) capped shares, and confirm ranks don’t swing wildly.
+
+Track trend terms (ΔHHI, ΔC4) to reduce over‑reaction to one‑off data changes.
+
+G) Legal & policy edge cases
+
+Sanctioned/embargoed regions: hard‑coded suppression.
+
+Small states/territories: decide roll‑up policy (to region or to parent country market).
+
+Country‑specific competition‑law language (e.g., thresholds are analytic, not statutory).
+
+H) Product packaging choices
+
+Default landing page: Country heatmap with confidence overlay; click‑through to Industry detail.
+
+Explainability chips: “High C4,” “Low IBI,” “Rapidly rising HHI,” “Low coverage.”
+
+Downloadable country fiches (1‑pager per country: method, coverage, top industries, flags).
+
+I) Implementation last‑mile
+
+Partitioning keys, row counts by partition, and expected job duration after going global.
+
+Backfill historical months for at least 12–24 months for trend features.
+
+Runbook: failure modes, contacts, and a one‑click rollback to last green snapshot.
+
+J) Documentation to ship with launch
+
+Method note (5–7 pages): formula, assumptions, limitations, small‑N policy, coverage, known caveats.
+
+Data dictionary for the prod table.
+
+Changelog & decision log (who decided what, when).
+
+FAQ: “Why is country X suppressed?”, “Why does MCRS say high but my on‑the‑ground view says moderate?”, etc.
+
+Concrete pre‑reads to bring to the meeting
+
+Country×Industry matrix with columns: n_firms, coverage_rate, MCRS, HHI, C4, IBI, confidence_tier, suppress_flag.
+
+List of all (Country, Industry) with N < 10 and the proposed roll‑up target.
+
+10 sanity cards (diverse regions): raw shares, top 4 firms, coverage notes, and the reason codes.
+
+Validation summary: ρ(HHI,C4), stability metrics, and any outcome correlations you have.
+
+Suggested phrasing for decisions in‑meeting
+
+“We suppress N<10, label 10–29 as Low Confidence, and otherwise publish with coverage bins.”
+
+“We map to ISIC Rev.4, assign by primary industry, and use local legal entities for shares.”
+
+“We publish MCRS + reason codes + coverage/confidence, with a monthly refresh and a 24‑month backfill.”
+
+“We accept Go if coverage and stability gates pass and legal approves the disclaimer + suppression policy.”
+
+If helpful, I can draft the one‑page method note and a country heatmap spec next.
